@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Avatar from github</h2>
+    
+
+    <script>
+        function httpGet(url) {
+
+            return new Promise(function(resolve, reject) {
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', url, true);
+
+                xhr.onload = function() {
+                    if (this.status == 200) {
+                    resolve(this.response);
+                    } else {
+                    var error = new Error(this.statusText);
+                    error.code = this.status;
+                    reject(error);
+                    }
+                };
+
+                xhr.onerror = function() {
+                    reject(new Error("Network Error"));
+                };
+
+                xhr.send();
+                });
+
+        };
+
+        httpGet('https://api.github.com/users/techmagic-team')
+            .then(response => {
+                let img = new Image();
+                let user = JSON.parse(response);
+                img.src = user.avatar_url;
+                setTimeout(() => {
+                    document.body.appendChild(img);
+                }, 800);
+                setTimeout(() => {
+                    img.remove()
+                }, 8000);
+            })
+    </script>
+</body>
+</html>

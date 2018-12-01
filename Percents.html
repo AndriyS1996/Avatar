@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+</head>
+<style>
+                body div{
+                        display: flex;
+                        margin: 14px;
+                }
+                body div div{
+                        padding-right: 20px;
+                        margin: 0;
+                }
+                #diagrams{
+                        display: block;
+                }
+                #diagrams div div{
+                        width: 50px;
+                        height: 180px;
+                        background-color: red;
+                        margin: 7px;
+                }
+                #diagrams div{
+                        display: flex;
+                        align-items: baseline;
+                        margin: 10px;
+                }
+                #diagrams strong{
+                        margin: 5px 17px;
+                }
+                #diagram strong span{
+                        width: 50px;
+                }
+              </style>
+            </head>
+            
+            <body>
+                       <p>12% річних обрахунко</p>
+                       <div id="sum">
+                                <div>Sum</div>
+                                <input type="text" value="10000">
+                       </div>
+                       <div id="timeInMonth">
+                               <div>time</div>
+                               <select name="period" id="months">
+                                       <option value="3">3 month</option>
+                                       <option value="6">6 month</option>
+                                       <option value="12" selected>12 month(1 year)</option>
+                                       <option value="18">18 month(1.5 year)</option>
+                                       <option value="24">24 month(2 years)</option>
+                                       <option value="30">30 month(2.5 years)</option>
+                                       <option value="36">36 month(3 years)</option>
+                               </select>
+                       </div>
+                       <div id="capital">
+                               <div><label for="check">with Capitalization</label></div>
+                               <input type="checkbox" name="capital" id="check">
+                       </div>
+                       <div id="diagrams">
+                               <div>
+                                       <strong>It was:<br><span>10000</span></strong>
+                                       <strong>It will:<br><span>11200</span></strong> 
+                                </div>
+                                <div>
+                                        <div></div>
+                                        <div style='background-color:green; height: 201.6px;' id="changingdiagram"></div> 
+                                </div>
+                       </div>
+              <script>
+                       var check = document.getElementById('check');
+                       var sum = document.querySelector('#sum input');
+                       var number1 = document.querySelectorAll('#diagrams div strong span')[0];
+                       var number2 = document.querySelectorAll('#diagrams div strong span')[1];
+                       var changingdiagram = document.getElementById('changingdiagram');
+                       var time = document.getElementById('months');
+                       var changingnumber = 1;
+                       var summa = 1;
+                       var selected = parseFloat(document.querySelector('#months option[selected]').innerHTML);
+                       statusOfcapital = false;
+                       var Change = sum.oninput = function(){
+                               if (isNaN(sum.value)) sum.value = sum.value.substring(0, sum.value.length - 1);
+                               if (sum.value) summa = parseFloat(sum.value);
+                               if (!sum.value) summa = 1;
+                               if (!statusOfcapital) {
+                                        changingnumber = Math.round(summa + summa * 0.12 * selected/12) + '';
+                                        changingdiagram.style.height = Math.round(180 * changingnumber/summa) + 'px'
+                               } else {
+                                        changingnumber = Math.round(summa*Math.pow(1.01, selected)) + '';
+                                        changingdiagram.style.height = Math.round(180 * changingnumber/summa) + 'px';
+                               }
+                               number1.innerHTML = summa;
+                               number2.innerHTML = changingnumber;
+                       }
+                       check.onchange = function(){
+                               statusOfcapital = !statusOfcapital;
+                               Change();
+                       };
+                       time.onchange = function(){
+                               selected = parseFloat(this.children[this.selectedIndex].innerHTML);
+                               Change();
+                       }
+                </script>
+            
+            
+            </body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+</head>
+        <style>
+                #table{
+                        display:flex;
+                }
+                #table ul{
+                        margin: 2px;
+                        font-weight: bold;
+                }
+                #table ul li{
+                        text-decoration: none;
+                        list-style-type: none;
+                        font-weight: initial;
+                        text-align: center;
+                }
+                span:hover{
+                        cursor: pointer;
+                        background-color: #666666;
+                }
+            
+         </style>
+<body>
+                 <div id="table">
+                         <ul data-type="number"><span>Age</span>
+                                         <li>6</li>
+                                         <li>10</li>
+                                         <li>23</li>
+                                         <li>8</li>
+                                         <li>14</li>
+                         </ul>
+                         <ul data-type="string"><span>Name</span>
+                                         <li>Yanuk</li>
+                                         <li>Ivan</li>
+                                         <li>Petro</li>
+                                         <li>Vasya</li>
+                                         <li>Pavlo</li>
+                         </ul>
+                         <ul data-type="string"><span>Food</span>
+                                 <li>pizza</li>
+                                 <li>tomato</li>
+                                 <li>watermelon</li>
+                                 <li>spagetti</li>
+                                 <li>porridge</li>
+                         </ul>
+                         <ul data-type="number"><span>Count of visiting per week</span>
+                                 <li>12</li>
+                                 <li>3</li>
+                                 <li>8</li>
+                                 <li>23</li>
+                                 <li>9</li>
+                         </ul>
+                 </div>
+         
+                 
+         <script> 
+                var table = document.getElementById('table');
+                table.onclick = function(event){
+                         var target = event.target;
+                         if (target.tagName != 'SPAN') return;
+                               var list = target.parentNode.querySelectorAll('li');
+                               var listArr = [], sortedArr = [];
+                               for (let i = 0; i < list.length; i++) {
+                                       listArr[i] = list[i].textContent;
+                               }
+                               var mapped = listArr.map(function(el, i){
+                                       return { index: i, value: el}
+                               });
+                               if (target.parentNode.dataset.type == 'number') {
+                                       sortedArr = mapped.sort(function(a,b){
+                                               return a.value - b.value
+                                       })
+                               } else {
+                                       sortedArr = mapped.sort(function(a, b){
+                                         if (a.value > b.value) { 
+                                                 return 1; } 
+                                         if (a.value < b.value) { 
+                                                 return -1; } 
+                                         return 0;
+                                       });
+                               };
+                               var uls = document.querySelectorAll('#table ul')
+                               var tables = [], t = [];
+                               for (let i = 0; i < uls.length; i++) {
+                                       tables[i] = document.querySelectorAll('#table ul:nth-child(' + (i + 1) + ') li');
+                               };
+                               for (let i = 0; i < uls.length; i++) {
+                                       t[i] = [];
+                                         for (let j = 0; j < list.length; j++) {
+                                                 t[i][j] = tables[i][j].innerHTML;     
+                                         }
+                               };
+                                       
+                               for (let i = 0; i < uls.length; i++) {
+                                       for (let j = 0; j < sortedArr.length; j++) {
+                                               tables[i][j].innerHTML = t[i][sortedArr[j].index];
+                                       }
+                               }
+                }
+         
+         
+                 
+         </script>
+    
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+</head>
+<style>
+        .lol{
+                height: 2000px;
+        }
+               html,
+                body {
+                margin: 0;
+                padding: 0;
+                }
+
+                #field {
+                background: url(https://js.cx/drag-heroes/field.png);
+                width: 800px;
+                height: 600px;
+                float: left;
+                }
+                /* герои и мяч (переносимые элементы) */
+
+                .hero {
+                background: url(https://js.cx/drag-heroes/heroes.png);
+                width: 130px;
+                height: 128px;
+                float: left;
+                }
+
+                #hero1 {
+                background-position: 0 0;
+                }
+
+                #hero2 {
+                background-position: 0 -128px;
+                }
+
+                #hero3 {
+                background-position: -120px 0;
+                }
+
+                #hero4 {
+                background-position: -125px -128px;
+                }
+
+                #hero5 {
+                background-position: -248px -128px;
+                }
+
+                #hero6 {
+                background-position: -244px 0;
+                }
+
+                .draggable {
+                cursor: pointer;
+                }
+                .fas{
+                        z-index: 1000;
+                        position: fixed;
+                        right: 20px;
+                        bottom: 20px;
+                        color: blueviolet;
+                }
+                .fas:hover{
+                        cursor: pointer;
+                }
+              </style>
+            <body>
+                      <h2>Scroll Down</h2>
+                        <div id="field">
+                      
+                        </div>
+                      
+                        <div class="hero draggable" id="hero1"></div>
+                        <div class="hero draggable" id="hero2"></div>
+                        <div class="hero draggable" id="hero3"></div>
+                        <div class="hero draggable" id="hero4"></div>
+                        <div class="hero draggable" id="hero5"></div>
+                        <div class="hero draggable" id="hero6"></div>
+                      
+                        <img src="https://js.cx/drag-heroes/ball.png" class="draggable">
+                      
+                        <div style="clear:both"></div>
+                        <div class="lol"></div>
+                        <i class="fas fa-arrow-alt-circle-up fa-3x" id="arrow"></i>
+                        <i class="fas fa-arrow-alt-circle-down fa-3x" id="arrow1"></i>
+              <script>
+                     var arrow = document.getElementById('arrow');
+                     var arrow1 = document.getElementById('arrow1');
+                        arrow.style.display = 'none';
+                        arrow1.style.display = 'none';
+                     var currentHeightOfwindow = document.documentElement.clientHeight;
+                     var savedScroll = 0;
+                     var t = false;
+                     window.onscroll = function(){
+                             var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+                             if (t) return;
+                             if ((scrolled < currentHeightOfwindow)) {
+                                arrow.style.display = 'none';
+                                arrow1.style.display = 'none';
+                             } else {
+                                arrow.style.display = '';
+                                arrow1.style.display = 'none';
+                             }
+                     };
+                     arrow.onclick = function(){
+                             var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+                             arrow1.style.display = '';
+                             arrow.style.display = 'none';
+                             savedScroll = scrolled;
+                             t = true;
+                             window.scrollTo(0,0);
+                     };
+                     arrow1.onclick = function(){
+                             arrow1.style.display = 'none';
+                             arrow.style.display = '';
+                             window.scrollTo(0,savedScroll);
+                             t = false;
+                     }
+
+              </script>
+</body>
+
+</html>
