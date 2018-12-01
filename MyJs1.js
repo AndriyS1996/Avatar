@@ -1,1 +1,0 @@
-var rest = '<p>I think i can do it</p>';
